@@ -32,7 +32,7 @@
             </el-dropdown-menu>
         </el-dropdown>
         <el-divider direction="vertical"></el-divider>
-        <el-link :href="company.web" target="_blank" :underline="false">
+        <el-link :href="company.web | pickUrl" target="_blank" :underline="false">
             <i class="el-icon-user el-icon--right"></i> {{company.fullname}}
         </el-link>
     </div>
@@ -62,6 +62,15 @@
         computed:{
             company(){
                 return this.auth.Company;
+            }
+        },
+        filters:{
+            pickUrl(data){
+                if(_.includes(data,'http://')){
+                    return data;
+                } else {
+                    return `http://${data}`;
+                }
             }
         },
         created(){
